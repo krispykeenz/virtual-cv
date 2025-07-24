@@ -68,7 +68,7 @@ export class ProjectsComponent {
     }
   ];
 
-  categories: string[] = ['All', 'Full Stack', 'Frontend', 'Backend', 'Mobile', 'Data Visualization', 'Machine Learning'];
+  categories: string[] = ['All', 'Full Stack', 'Backend', 'Mobile', 'Data Visualization'];
   selectedCategory: string = 'All';
   filteredProjects: Project[] = [...this.projects];
 
