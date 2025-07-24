@@ -1,0 +1,114 @@
+<section class="skills-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Skills & Technologies</h1>
+      <p>Comprehensive overview of my technical expertise and proficiency levels</p>
+    </div>
+
+    <!-- Skills Overview Stats -->
+    <div class="skills-overview">
+      <div class="overview-card" *ngFor="let category of skillCategories">
+        <div class="card-icon" [style.color]="category.color">{{category.icon}}</div>
+        <h3>{{category.name}}</h3>
+        <div class="skill-count">{{category.skills.length}} Technologies</div>
+        <div class="avg-level">
+        Avg. Level: {{getAverageLevel(category)}}%
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Categories -->
+    <div class="skills-categories">
+      <div 
+        *ngFor="let category of skillCategories; let i = index" 
+        class="category-section"
+        [class.expanded]="selectedCategory === category"
+        [style.animation-delay.ms]="i * 200">
+        
+        <div 
+          class="category-header" 
+          (click)="selectCategory(category)"
+          [style.border-left-color]="category.color">
+          <div class="header-content">
+            <div class="header-left">
+              <span class="category-icon" [style.background]="category.color">{{category.icon}}</span>
+              <h2>{{category.name}}</h2>
+            </div>
+            <div class="header-right">
+              <span class="skills-count">{{category.skills.length}} skills</span>
+              <span class="expand-icon" [class.rotated]="selectedCategory === category">▼</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-content" [class.visible]="selectedCategory === category">
+          <div class="skills-grid">
+            <div 
+              *ngFor="let skill of category.skills; let j = index" 
+              class="skill-item"
+              [style.animation-delay.ms]="j * 100">
+              
+              <div class="skill-header">
+                <div class="skill-info">
+                  <span class="skill-icon">{{skill.icon}}</span>
+                  <div class="skill-details">
+                    <h4>{{skill.name}}</h4>
+                    <p class="skill-description" *ngIf="skill.description">{{skill.description}}</p>
+                  </div>
+                </div>
+                <div class="skill-level">
+                  <span class="level-text">{{getSkillLevelText(skill.level)}}</span>
+                  <span class="level-percentage">{{skill.level}}%</span>
+                </div>
+              </div>
+
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div 
+                    class="progress-fill" 
+                    [style.width.%]="animationTriggered && selectedCategory === category ? skill.level : 0"
+                    [style.background-color]="getProgressColor(skill.level)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Summary -->
+    <div class="skills-summary">
+      <h2>Technical Proficiency Summary</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="summary-icon">🚀</div>
+          <h3>Years of Experience</h3>
+          <div class="summary-value">2+</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-icon">💻</div>
+          <h3>Technologies Mastered</h3>
+          <div class="summary-value">{{getTotalSkills()}}</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-icon">⭐</div>
+          <h3>Expert Level Skills</h3>
+          <div class="summary-value">{{getExpertSkills()}}</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-icon">📈</div>
+          <h3>Overall Proficiency</h3>
+          <div class="summary-value">{{getOverallProficiency()}}%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta-section">
+      <h2>Ready to collaborate?</h2>
+      <p>Let's discuss how these skills can benefit your next project</p>
+      <a href="/contact" class="cta-button">Get In Touch</a>
+    </div>
+  </div>
+</section>

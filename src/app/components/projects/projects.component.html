@@ -1,0 +1,113 @@
+<section class="projects-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Projects</h1>
+      <p>Showcase of my latest work and creative solutions</p>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-tabs">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category"
+        (click)="selectCategory(category)"
+        class="filter-tab">
+        {{category}}
+      </button>
+    </div>
+
+    <!-- Featured Projects -->
+    <div class="featured-section" *ngIf="selectedCategory === 'All'">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="featured-grid">
+        <div 
+          *ngFor="let project of projects | slice:0:3" 
+          class="featured-card"
+          [class.featured]="project.featured">
+          <div class="card-image">
+            <img [src]="project.image" [alt]="project.title" />
+            <div class="image-overlay">
+              <div class="overlay-buttons">
+                <button 
+                  *ngIf="project.githubUrl" 
+                  (click)="openGithub(project.githubUrl)"
+                  class="overlay-btn github-btn">
+                  <span class="icon">📁</span>
+                  Code
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3>{{project.title}}</h3>
+              <span class="category-badge">{{project.category}}</span>
+            </div>
+            <p class="description">{{project.description}}</p>
+            <div class="tech-stack">
+              <span class="tech-tag" *ngFor="let tech of project.technologies">{{tech}}</span>
+            </div>
+            <div class="card-footer">
+              <div class="action-buttons">
+                <button 
+                  *ngIf="project.githubUrl" 
+                  (click)="openGithub(project.githubUrl)"
+                  class="action-btn secondary">
+                  GitHub
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Projects Grid -->
+    <div class="projects-grid">
+      <h2 class="section-title" *ngIf="selectedCategory === 'All'">All Projects</h2>
+      <h2 class="section-title" *ngIf="selectedCategory !== 'All'">{{selectedCategory}} Projects</h2>
+      
+      <div class="grid-container">
+        <div 
+          *ngFor="let project of filteredProjects" 
+          class="project-card">
+          <div class="card-image">
+            <img [src]="project.image" [alt]="project.title" />
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <h4>{{project.title}}</h4>
+                <p>{{project.longDescription}}</p>
+                <div class="overlay-buttons">
+                  <button 
+                    *ngIf="project.githubUrl" 
+                    (click)="openGithub(project.githubUrl)"
+                    class="overlay-btn github-btn">
+                    <span class="icon">📁</span>
+                    View Code
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3>{{project.title}}</h3>
+              <span class="category-badge" [attr.data-category]="project.category">{{project.category}}</span>
+            </div>
+            <p class="description">{{project.description}}</p>
+            <div class="tech-stack">
+              <span class="tech-tag" *ngFor="let tech of project.technologies">{{tech}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredProjects.length === 0">
+      <div class="empty-icon">📁</div>
+      <h3>No projects found</h3>
+      <p>No projects match the selected category. Try selecting a different filter.</p>
+    </div>
+  </div>
+</section>

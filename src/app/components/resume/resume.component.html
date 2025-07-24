@@ -1,0 +1,95 @@
+<section class="resume-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Resume</h1>
+      <p>Professional experience and educational background</p>
+      <button class="download-btn" (click)="downloadResume()">
+        <span class="icon">📄</span>
+        Download PDF
+      </button>
+    </div>
+
+    <div class="resume-content">
+      <!-- Education Section -->
+      <div class="resume-block">
+        <div class="block-header">
+          <div class="header-icon">🎓</div>
+          <h2>Education</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let edu of education; let i = index">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+              <div class="marker-line" *ngIf="i < education.length - 1"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3>{{edu.degree}}</h3>
+                <span class="period">{{edu.period}}</span>
+              </div>
+              <div class="institution">{{edu.institution}}</div>
+              <div class="gpa" *ngIf="edu.gpa">GPA: {{edu.gpa}}</div>
+              <p class="description" *ngIf="edu.description">{{edu.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="resume-block">
+        <div class="block-header">
+          <div class="header-icon">💼</div>
+          <h2>Professional Experience</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let exp of experience; let i = index">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+              <div class="marker-line" *ngIf="i < experience.length - 1"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="content-header">
+                <h3>{{exp.title}}</h3>
+                <span class="period">{{exp.period}}</span>
+              </div>
+              <div class="company-location">
+                <span class="company">{{exp.company}}</span>
+                <span class="location">{{exp.location}}</span>
+              </div>
+              <ul class="responsibilities">
+                <li *ngFor="let responsibility of exp.responsibilities">{{responsibility}}</li>
+              </ul>
+              <div class="technologies" *ngIf="exp.technologies">
+                <span class="tech-label">Technologies:</span>
+                <div class="tech-tags">
+                  <span class="tech-tag" *ngFor="let tech of exp.technologies">{{tech}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications Section -->
+      <div class="resume-block">
+        <div class="block-header">
+          <div class="header-icon">🏆</div>
+          <h2>Certifications</h2>
+        </div>
+        <div class="certifications-grid">
+          <div class="certification-card" *ngFor="let cert of certifications">
+            <div class="cert-header">
+              <h3>{{cert.name}}</h3>
+              <span class="cert-date">{{cert.date}}</span>
+            </div>
+            <div class="cert-issuer">{{cert.issuer}}</div>
+            <div class="cert-id" *ngIf="cert.credentialId">ID: {{cert.credentialId}}</div>
+            <a *ngIf="cert.link" [href]="cert.link" target="_blank" class="cert-link">
+              View Credential
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

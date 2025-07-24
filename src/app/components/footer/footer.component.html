@@ -1,0 +1,106 @@
+<footer class="footer">
+  <div class="footer-content">
+    <div class="container">
+      <!-- Main Footer Content -->
+      <div class="footer-main">
+        <!-- Brand Section -->
+        <div class="footer-section brand-section">
+          <div class="brand">
+            <h3 class="brand-name">Keenan Burriss</h3>
+            <p class="brand-tagline">Full Stack Developer & Creative Problem Solver</p>
+          </div>
+          <p class="brand-description">
+            Passionate about creating innovative solutions and beautiful user experiences. 
+            Always excited to take on new challenges and collaborate on meaningful projects.
+          </p>
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="contact-icon">📧</span>
+              <a [href]="'mailto:' + contactInfo.email" class="contact-link">{{contactInfo.email}}</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📱</span>
+              <a [href]="'tel:+15551234567'" class="contact-link">{{contactInfo.phone}}</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📍</span>
+              <span class="contact-text">{{contactInfo.location}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Section -->
+        <div class="footer-section navigation-section">
+          <h4 class="section-title">Navigation</h4>
+          <nav class="footer-nav">
+            <a 
+              *ngFor="let link of navigationLinks" 
+              [routerLink]="link.path" 
+              class="nav-link"
+              routerLinkActive="active">
+              {{link.name}}
+            </a>
+          </nav>
+        </div>
+
+        <!-- Social Links Section -->
+        <div class="footer-section social-section">
+          <h4 class="section-title">Connect With Me</h4>
+          <div class="social-links">
+            <button
+              *ngFor="let social of socialLinks"
+              (click)="openSocialLink(social.url)"
+              [attr.aria-label]="social.ariaLabel"
+              class="social-btn">
+              <span class="social-icon">{{social.icon}}</span>
+              <span class="social-name">{{social.name}}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="footer-section newsletter-section">
+          <h4 class="section-title">Stay Updated</h4>
+          <p class="newsletter-description">
+            Get notified about new projects and blog posts
+          </p>
+          <div class="newsletter-form">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              class="newsletter-input"
+              aria-label="Email address for newsletter">
+            <button class="newsletter-btn" aria-label="Subscribe to newsletter">
+              <span class="btn-icon">📧</span>
+            </button>
+          </div>
+          <p class="newsletter-note">
+            No spam, unsubscribe at any time
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-content">
+          <div class="copyright">
+            <p>&copy; {{currentYear}} Your Name. All rights reserved.</p>
+            <p class="sub-text">Built with Angular and passion for great design</p>
+          </div>
+          
+          <div class="footer-actions">
+            <button (click)="scrollToTop()" class="scroll-top-btn" aria-label="Scroll to top">
+              <span class="scroll-icon">↑</span>
+              <span class="scroll-text">Back to Top</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Elements -->
+  <div class="footer-background">
+    <div class="bg-pattern"></div>
+  </div>
+</footer>
