@@ -60,7 +60,7 @@ export class ProjectsComponent {
       title: 'Mobile Expense Tracker',
       description: 'Cross-platform mobile app for personal expense tracking',
       longDescription: 'Mobile application for tracking personal expenses with categories, budgets, and spending analytics. Built with React Native for cross-platform compatibility.',
-      image: 'https://picsum.photos/800/600?random=6',
+      image: 'https://raw.githubusercontent.com/krispykeenz/virtual-cv/refs/heads/main/src/assets/images/expense-tracker.jpg',
       technologies: ['React Native', 'Firebase', 'Redux', 'Chart.js', 'Expo'],
       githubUrl: 'https://github.com/krispykeenz/Displaying_Finances',
       category: 'Mobile',
