@@ -86,6 +86,6 @@ export class ResumeComponent {
     // In a real application, this would trigger a PDF download
     console.log('Downloading resume...');
     // You can implement actual PDF generation or link to a static PDF file
-    window.open('assets/documents/resume.pdf', '_blank');
+    window.open('assets/documents/Resume.pdf', '_blank');
   }
 }
