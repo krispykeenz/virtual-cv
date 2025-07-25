@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ContactService } from '../../services/contact.service';
 
 export interface ContactForm {
   name: string;
@@ -40,6 +41,9 @@ export class ContactComponent {
 
   isSubmitting = false;
   isSubmitted = false;
+  errorMessage = '';
+
+  constructor(private contactService: ContactService) {}
 
   contactInfo: ContactInfo[] = [
     {
@@ -105,36 +109,37 @@ export class ContactComponent {
   async onSubmit(form: NgForm): Promise<void> {
     if (form.valid) {
       this.isSubmitting = true;
+      this.errorMessage = '';
       
       try {
-        // Simulate API call
-        await this.delay(2000);
+        const response = await this.contactService.sendContactMessage(this.contactForm).toPromise();
         
-        console.log('Form submitted:', this.contactForm);
+        if (response?.success) {
+          console.log('✅ Message sent successfully:', response.messageId);
+          this.isSubmitted = true;
+          this.resetForm();
+          
+          // Hide success message after 8 seconds
+          setTimeout(() => {
+            this.isSubmitted = false;
+          }, 8000);
+        }
         
-        // In a real application, you would send this data to your backend
-        // Example: await this.contactService.sendMessage(this.contactForm);
+      } catch (error: any) {
+        console.error('❌ Error submitting form:', error);
+        this.errorMessage = error.message || 'Failed to send message. Please try again or contact me directly.';
         
-        this.isSubmitted = true;
-        this.resetForm();
-        
-        // Hide success message after 5 seconds
+        // Hide error message after 8 seconds
         setTimeout(() => {
-          this.isSubmitted = false;
-        }, 5000);
-        
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        // Handle error (show error message to user)
+          this.errorMessage = '';
+        }, 8000);
       } finally {
         this.isSubmitting = false;
       }
     }
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+
 
   private resetForm(): void {
     this.contactForm = {

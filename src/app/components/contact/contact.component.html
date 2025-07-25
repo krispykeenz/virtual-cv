@@ -110,6 +110,13 @@
             <h3>Message Sent Successfully!</h3>
             <p>Thank you for reaching out. I'll get back to you within 24 hours.</p>
           </div>
+
+          <!-- Error Message -->
+          <div class="error-message-container" *ngIf="errorMessage">
+            <div class="error-icon">❌</div>
+            <h3>Failed to Send Message</h3>
+            <p>{{errorMessage}}</p>
+          </div>
         </form>
       </div>
 

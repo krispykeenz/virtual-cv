@@ -222,6 +222,32 @@
           opacity: 0.9;
         }
       }
+
+      .error-message-container {
+        background: rgba(231, 76, 60, 0.2);
+        border: 1px solid rgba(231, 76, 60, 0.3);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 2rem;
+        animation: fadeInUp 0.5s ease-out;
+
+        .error-icon {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.3rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          color: #e74c3c;
+        }
+
+        p {
+          opacity: 0.9;
+        }
+      }
     }
   }
 
