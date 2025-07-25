@@ -23,7 +23,11 @@ const limiter = rateLimit({
 
 // CORS configuration
 app.use(cors({
-  origin: ['http://localhost:4200', 'http://127.0.0.1:4200'],
+  origin: [
+    'http://localhost:4200', 
+    'http://127.0.0.1:4200',
+    'https://krispykeenz.github.io'
+  ],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
