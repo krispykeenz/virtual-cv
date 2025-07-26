@@ -28,8 +28,9 @@ app.use(cors({
     'http://127.0.0.1:4200',
     'https://krispykeenz.github.io'
   ],
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
 }));
 
 // Body parser middleware
