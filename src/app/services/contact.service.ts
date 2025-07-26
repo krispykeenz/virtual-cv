@@ -23,9 +23,7 @@ export interface ContactResponse {
   providedIn: 'root'
 })
 export class ContactService {
-  private readonly apiUrl = environment.production 
-    ? 'https://your-domain.com/api' 
-    : 'http://localhost:3000/api';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
