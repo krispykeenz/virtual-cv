@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-backend-deployment.railway.app/api' // Update with your actual backend URL
+  apiUrl: 'virtual-cv-production.up.railway.app'
 };
