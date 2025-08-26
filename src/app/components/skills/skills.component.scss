@@ -1,6 +1,6 @@
 .skills-section {
   padding: 4rem 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: var(--gradient-light);
   min-height: 100vh;
 
   .container {
@@ -16,7 +16,7 @@
     h1 {
       font-size: 3rem;
       font-weight: 700;
-      color: #2c3e50;
+      color: var(--neutral-dark);
       margin-bottom: 1rem;
       position: relative;
 
@@ -28,14 +28,14 @@
         transform: translateX(-50%);
         width: 80px;
         height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: var(--gradient-primary);
         border-radius: 2px;
       }
     }
 
     p {
       font-size: 1.2rem;
-      color: #7f8c8d;
+      color: var(--secondary-light);
       max-width: 600px;
       margin: 0 auto;
     }
@@ -61,11 +61,11 @@
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       }
 
-      &:nth-child(1) { border-top-color: #3498db; }
-      &:nth-child(2) { border-top-color: #27ae60; }
-      &:nth-child(3) { border-top-color: #9b59b6; }
-      &:nth-child(4) { border-top-color: #e74c3c; }
-      &:nth-child(5) { border-top-color: #f39c12; }
+      &:nth-child(1) { border-top-color: var(--accent-primary); }
+      &:nth-child(2) { border-top-color: var(--accent-success); }
+      &:nth-child(3) { border-top-color: var(--primary-accent); }
+      &:nth-child(4) { border-top-color: var(--accent-danger); }
+      &:nth-child(5) { border-top-color: var(--accent-warning); }
 
       .card-icon {
         font-size: 2.5rem;
@@ -75,20 +75,20 @@
       h3 {
         font-size: 1.1rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: var(--neutral-dark);
         margin-bottom: 0.5rem;
       }
 
       .skill-count {
         font-size: 0.9rem;
-        color: #7f8c8d;
+        color: var(--secondary-light);
         margin-bottom: 0.5rem;
       }
 
       .avg-level {
         font-size: 0.85rem;
         font-weight: 600;
-        color: #34495e;
+        color: var(--secondary-medium);
       }
     }
   }
@@ -118,12 +118,12 @@
       .category-header {
         padding: 2rem;
         cursor: pointer;
-        border-left: 6px solid #3498db;
+        border-left: 6px solid var(--accent-primary);
         transition: all 0.3s ease;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        background: var(--gradient-light);
 
         &:hover {
-          background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+          background: var(--neutral-medium);
         }
 
         .header-content {
@@ -151,7 +151,7 @@
             h2 {
               font-size: 1.5rem;
               font-weight: 600;
-              color: #2c3e50;
+              color: var(--neutral-dark);
               margin: 0;
             }
           }
@@ -163,7 +163,7 @@
 
             .skills-count {
               font-size: 0.9rem;
-              color: #7f8c8d;
+              color: var(--secondary-light);
               background: rgba(255, 255, 255, 0.8);
               padding: 0.3rem 0.8rem;
               border-radius: 15px;
@@ -171,7 +171,7 @@
 
             .expand-icon {
               font-size: 1.2rem;
-              color: #7f8c8d;
+              color: var(--secondary-light);
               transition: transform 0.3s ease;
 
               &.rotated {
@@ -199,17 +199,17 @@
           gap: 1.5rem;
 
           .skill-item {
-            background: #f8f9fa;
+            background: var(--neutral-light);
             border-radius: 12px;
             padding: 1.5rem;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--neutral-medium);
             transition: all 0.3s ease;
             animation: fadeInUp 0.6s ease-out;
 
             &:hover {
-              background: #e9ecef;
+              background: var(--neutral-medium);
               transform: translateY(-2px);
-              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+              box-shadow: var(--shadow-light);
             }
 
             .skill-header {
@@ -233,13 +233,13 @@
                   h4 {
                     font-size: 1.1rem;
                     font-weight: 600;
-                    color: #2c3e50;
+                    color: var(--neutral-dark);
                     margin: 0 0 0.3rem 0;
                   }
 
                   .skill-description {
                     font-size: 0.85rem;
-                    color: #7f8c8d;
+                    color: var(--secondary-light);
                     margin: 0;
                     line-height: 1.4;
                   }
@@ -254,14 +254,14 @@
                   display: block;
                   font-size: 0.8rem;
                   font-weight: 600;
-                  color: #34495e;
+                  color: var(--secondary-medium);
                   margin-bottom: 0.2rem;
                 }
 
                 .level-percentage {
                   font-size: 1.1rem;
                   font-weight: 700;
-                  color: #2c3e50;
+                  color: var(--neutral-dark);
                 }
               }
             }
@@ -269,7 +269,7 @@
             .progress-container {
               .progress-bar {
                 height: 8px;
-                background: #e9ecef;
+                background: var(--neutral-medium);
                 border-radius: 4px;
                 overflow: hidden;
                 position: relative;
@@ -310,7 +310,7 @@
       text-align: center;
       font-size: 2rem;
       font-weight: 600;
-      color: #2c3e50;
+      color: var(--neutral-dark);
       margin-bottom: 2rem;
     }
 
@@ -323,7 +323,7 @@
         text-align: center;
         padding: 1.5rem;
         border-radius: 15px;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        background: var(--gradient-light);
         transition: transform 0.3s ease;
 
         &:hover {
@@ -338,14 +338,14 @@
         h3 {
           font-size: 1rem;
           font-weight: 600;
-          color: #34495e;
+          color: var(--secondary-medium);
           margin-bottom: 0.5rem;
         }
 
         .summary-value {
           font-size: 2rem;
           font-weight: 700;
-          color: #2c3e50;
+          color: var(--neutral-dark);
         }
       }
     }
@@ -354,7 +354,7 @@
   .cta-section {
     text-align: center;
     padding: 3rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-primary);
     border-radius: 20px;
     color: white;
 

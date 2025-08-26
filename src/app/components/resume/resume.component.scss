@@ -1,6 +1,6 @@
 .resume-section {
   padding: 4rem 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: var(--gradient-light);
   min-height: 100vh;
 
   .container {
@@ -16,7 +16,7 @@
     h1 {
       font-size: 3rem;
       font-weight: 700;
-      color: #2c3e50;
+      color: var(--neutral-dark);
       margin-bottom: 1rem;
       position: relative;
 
@@ -28,19 +28,19 @@
         transform: translateX(-50%);
         width: 80px;
         height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: var(--gradient-primary);
         border-radius: 2px;
       }
     }
 
     p {
       font-size: 1.2rem;
-      color: #7f8c8d;
+      color: var(--secondary-light);
       margin-bottom: 2rem;
     }
 
     .download-btn {
-      background: linear-gradient(45deg, #667eea, #764ba2);
+      background: var(--gradient-primary);
       color: white;
       border: none;
       padding: 1rem 2rem;
@@ -52,11 +52,11 @@
       align-items: center;
       gap: 0.5rem;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      box-shadow: var(--shadow-medium);
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        box-shadow: var(--shadow-strong);
       }
 
       .icon {
@@ -95,19 +95,19 @@
         font-size: 2rem;
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: var(--gradient-primary);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: var(--shadow-light);
       }
 
       h2 {
         font-size: 2rem;
         font-weight: 700;
-        color: #2c3e50;
+        color: var(--neutral-dark);
         margin: 0;
       }
     }
@@ -134,17 +134,17 @@
           .marker-dot {
             width: 16px;
             height: 16px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--gradient-primary);
             border-radius: 50%;
             border: 3px solid white;
-            box-shadow: 0 0 0 3px #ecf0f1;
+            box-shadow: 0 0 0 3px var(--neutral-medium);
             z-index: 2;
             position: relative;
           }
 
           .marker-line {
             width: 2px;
-            background: #ecf0f1;
+            background: var(--neutral-medium);
             flex: 1;
             margin-top: 1rem;
             min-height: 50px;
@@ -153,15 +153,15 @@
 
         .timeline-content {
           flex: 1;
-          background: #f8f9fa;
+          background: var(--neutral-light);
           border-radius: 12px;
           padding: 1.5rem;
-          border-left: 4px solid #667eea;
+          border-left: 4px solid var(--primary-accent);
           transition: all 0.3s ease;
 
           &:hover {
-            background: #e9ecef;
-            border-left-color: #764ba2;
+            background: var(--neutral-medium);
+            border-left-color: var(--primary-medium);
           }
 
           .content-header {
@@ -174,13 +174,13 @@
             h3 {
               font-size: 1.3rem;
               font-weight: 600;
-              color: #2c3e50;
+              color: var(--neutral-dark);
               margin: 0;
               flex: 1;
             }
 
             .period {
-              background: linear-gradient(135deg, #667eea, #764ba2);
+              background: var(--gradient-primary);
               color: white;
               padding: 0.3rem 0.8rem;
               border-radius: 20px;
@@ -192,7 +192,7 @@
 
           .institution, .company-location {
             font-weight: 500;
-            color: #34495e;
+            color: var(--secondary-medium);
             margin-bottom: 0.5rem;
           }
 
@@ -203,23 +203,23 @@
 
             .company {
               font-weight: 600;
-              color: #2c3e50;
+              color: var(--neutral-dark);
             }
 
             .location {
-              color: #7f8c8d;
+              color: var(--secondary-light);
               font-style: italic;
             }
           }
 
           .gpa {
-            color: #27ae60;
+            color: var(--accent-success);
             font-weight: 600;
             margin-bottom: 0.5rem;
           }
 
           .description {
-            color: #5a6c7d;
+            color: var(--secondary-light);
             line-height: 1.6;
             margin-bottom: 0;
           }
@@ -233,14 +233,14 @@
               position: relative;
               padding-left: 1.5rem;
               margin-bottom: 0.5rem;
-              color: #5a6c7d;
+              color: var(--secondary-light);
               line-height: 1.6;
 
               &::before {
                 content: '▶';
                 position: absolute;
                 left: 0;
-                color: #667eea;
+                color: var(--primary-accent);
                 font-size: 0.8rem;
               }
             }
@@ -251,7 +251,7 @@
 
             .tech-label {
               font-weight: 600;
-              color: #2c3e50;
+              color: var(--neutral-dark);
               display: block;
               margin-bottom: 0.5rem;
             }
@@ -262,7 +262,7 @@
               gap: 0.5rem;
 
               .tech-tag {
-                background: linear-gradient(135deg, #667eea, #764ba2);
+                background: var(--gradient-primary);
                 color: white;
                 padding: 0.3rem 0.8rem;
                 border-radius: 15px;
@@ -281,16 +281,16 @@
       gap: 1.5rem;
 
       .certification-card {
-        background: #f8f9fa;
+        background: var(--neutral-light);
         border-radius: 12px;
         padding: 1.5rem;
-        border-left: 4px solid #27ae60;
+        border-left: 4px solid var(--accent-success);
         transition: all 0.3s ease;
 
         &:hover {
-          background: #e9ecef;
+          background: var(--neutral-medium);
           transform: translateY(-3px);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-medium);
         }
 
         .cert-header {
@@ -303,13 +303,13 @@
           h3 {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--neutral-dark);
             margin: 0;
             flex: 1;
           }
 
           .cert-date {
-            background: #27ae60;
+            background: var(--accent-success);
             color: white;
             padding: 0.2rem 0.6rem;
             border-radius: 15px;
@@ -321,13 +321,13 @@
 
         .cert-issuer {
           font-weight: 500;
-          color: #34495e;
+          color: var(--secondary-medium);
           margin-bottom: 0.5rem;
         }
 
         .cert-id {
           font-size: 0.9rem;
-          color: #7f8c8d;
+          color: var(--secondary-light);
           font-family: monospace;
           margin-bottom: 1rem;
         }
@@ -335,13 +335,13 @@
         .cert-link {
           display: inline-flex;
           align-items: center;
-          color: #667eea;
+          color: var(--primary-accent);
           text-decoration: none;
           font-weight: 500;
           transition: color 0.3s ease;
 
           &:hover {
-            color: #764ba2;
+            color: var(--primary-medium);
             text-decoration: underline;
           }
         }

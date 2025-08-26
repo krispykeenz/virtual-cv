@@ -1,0 +1,50 @@
+// Professional Color Palette
+// Modern, sleek, and corporate-friendly colors
+
+:root {
+  // Primary Colors - Navy Blue Theme
+  --primary-dark: #1e2a4a;      // Deep navy blue
+  --primary-medium: #2d3e63;    // Medium navy
+  --primary-light: #4a5a7a;     // Light navy
+  --primary-accent: #3d5a80;    // Accent navy
+  
+  // Secondary Colors - Charcoal and Grays
+  --secondary-dark: #2c2c2c;    // Charcoal
+  --secondary-medium: #404040;  // Medium gray
+  --secondary-light: #6c6c6c;   // Light gray
+  
+  // Accent Colors - Professional Blues and Teals
+  --accent-primary: #0066cc;    // Professional blue
+  --accent-secondary: #17a2b8;  // Teal accent
+  --accent-success: #28a745;    // Success green
+  --accent-warning: #ffc107;    // Warning amber
+  --accent-danger: #dc3545;     // Danger red
+  
+  // Neutral Colors
+  --neutral-white: #ffffff;
+  --neutral-light: #f8f9fa;
+  --neutral-medium: #e9ecef;
+  --neutral-dark: #495057;
+  
+  // Professional Gradients
+  --gradient-primary: linear-gradient(135deg, #1e2a4a 0%, #3d5a80 100%);
+  --gradient-secondary: linear-gradient(135deg, #2d3e63 0%, #4a5a7a 100%);
+  --gradient-accent: linear-gradient(90deg, #0066cc, #17a2b8);
+  --gradient-light: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  --gradient-dark: linear-gradient(135deg, #2c2c2c 0%, #404040 100%);
+  
+  // Hover States
+  --hover-primary: #4a5a7a;
+  --hover-secondary: #0056b3;
+  --hover-accent: #138496;
+  
+  // Professional Box Shadows
+  --shadow-light: 0 2px 10px rgba(30, 42, 74, 0.1);
+  --shadow-medium: 0 4px 20px rgba(30, 42, 74, 0.15);
+  --shadow-strong: 0 8px 30px rgba(30, 42, 74, 0.2);
+  
+  // Border Radius
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 15px;
+}

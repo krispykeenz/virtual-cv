@@ -1,8 +1,8 @@
 .about-section {
   padding: 2rem 0;
   min-height: calc(100vh - 80px);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--neutral-white);
   position: relative;
   overflow: hidden;
 
