@@ -65,6 +65,17 @@ export class ProjectsComponent {
       githubUrl: 'https://github.com/krispykeenz/Displaying_Finances',
       category: 'Mobile',
       featured: false,
+    },
+    {
+      id: 5,
+      title: 'Carrier Pigeon Post',
+      description: 'Cross-platform messaging experience that sends texts as whimsical pigeon deliveries',
+      longDescription: 'Carrier Pigeon Post is an Expo-powered React Native app that uses Supabase auth, animated map visuals, and React Query to simulate real-time pigeon message flights across the globe.',
+      image: 'https://raw.githubusercontent.com/krispykeenz/carrier-pigeon/main/assets/icon.png',
+      technologies: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'React Query', 'Mapbox'],
+      githubUrl: 'https://github.com/krispykeenz/carrier-pigeon',
+      category: 'Mobile',
+      featured: true,
     }
   ];
 
