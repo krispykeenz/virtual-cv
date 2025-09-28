@@ -141,7 +141,7 @@ export class ContactComponent {
 
 
 
-  private resetForm(): void {
+  private resetForm(): void { 
     this.contactForm = {
       name: '',
       email: '',
