@@ -26,7 +26,8 @@ app.use(cors({
   origin: [
     'http://localhost:4200', 
     'http://127.0.0.1:4200',
-    'https://krispykeenz.github.io'
+    'https://krispykeenz.github.io',
+    'https://keenanburriss.netlify.app'
   ],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
