@@ -2,57 +2,92 @@
   <div class="container">
     <div class="section-header">
       <h1>Projects</h1>
-      <p>Showcase of my latest work and creative solutions</p>
+      <p>Curated work (3–5 projects) with highlights, demo info, and links to code.</p>
     </div>
 
     <!-- Category Filter -->
-    <div class="filter-tabs">
-      <button 
+    <div class="filter-tabs" *ngIf="categories.length > 1">
+      <button
         *ngFor="let category of categories"
         [class.active]="selectedCategory === category"
         (click)="selectCategory(category)"
-        class="filter-tab">
-        {{category}}
+        class="filter-tab"
+        type="button">
+        {{ category }}
       </button>
     </div>
 
     <!-- Featured Projects -->
-    <div class="featured-section" *ngIf="selectedCategory === 'All'">
-      <h2 class="section-title">Featured Projects</h2>
+    <div class="featured-section" *ngIf="selectedCategory === 'All' && featuredProjects.length">
+      <h2 class="section-title">Featured</h2>
       <div class="featured-grid">
-        <div 
-          *ngFor="let project of projects | slice:0:3" 
+        <div
+          *ngFor="let project of featuredProjects"
           class="featured-card"
           [class.featured]="project.featured">
           <div class="card-image">
             <img [src]="project.image" [alt]="project.title" />
             <div class="image-overlay">
               <div class="overlay-buttons">
-                <button 
-                  *ngIf="project.githubUrl" 
+                <button
+                  (click)="openProject(project, 'overview')"
+                  class="overlay-btn primary"
+                  type="button">
+                  Details
+                </button>
+
+                <button
+                  (click)="openProject(project, 'demo')"
+                  class="overlay-btn"
+                  type="button">
+                  Demo
+                </button>
+
+                <button
+                  *ngIf="project.githubUrl"
                   (click)="openGithub(project.githubUrl)"
-                  class="overlay-btn github-btn">
+                  class="overlay-btn github-btn"
+                  type="button">
                   <span class="icon">📁</span>
                   Code
                 </button>
               </div>
             </div>
           </div>
+
           <div class="card-content">
             <div class="card-header">
-              <h3>{{project.title}}</h3>
-              <span class="category-badge">{{project.category}}</span>
+              <h3>{{ project.title }}</h3>
+              <span class="category-badge" [attr.data-category]="project.category">{{ project.category }}</span>
             </div>
-            <p class="description">{{project.description}}</p>
+
+            <p class="description">{{ project.description }}</p>
+
             <div class="tech-stack">
-              <span class="tech-tag" *ngFor="let tech of project.technologies">{{tech}}</span>
+              <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
             </div>
+
             <div class="card-footer">
               <div class="action-buttons">
-                <button 
-                  *ngIf="project.githubUrl" 
+                <button
+                  (click)="openProject(project, 'overview')"
+                  class="action-btn primary"
+                  type="button">
+                  Details
+                </button>
+
+                <button
+                  (click)="openProject(project, 'demo')"
+                  class="action-btn secondary"
+                  type="button">
+                  Demo
+                </button>
+
+                <button
+                  *ngIf="project.githubUrl"
                   (click)="openGithub(project.githubUrl)"
-                  class="action-btn secondary">
+                  class="action-btn secondary"
+                  type="button">
                   GitHub
                 </button>
               </div>
@@ -62,26 +97,41 @@
       </div>
     </div>
 
-    <!-- All Projects Grid -->
-    <div class="projects-grid">
-      <h2 class="section-title" *ngIf="selectedCategory === 'All'">All Projects</h2>
-      <h2 class="section-title" *ngIf="selectedCategory !== 'All'">{{selectedCategory}} Projects</h2>
-      
+    <!-- Other / Filtered Projects -->
+    <div class="projects-grid" *ngIf="displayedProjects.length">
+      <h2 class="section-title">
+        {{ selectedCategory === 'All' ? 'More Projects' : (selectedCategory + ' Projects') }}
+      </h2>
+
       <div class="grid-container">
-        <div 
-          *ngFor="let project of filteredProjects" 
-          class="project-card">
+        <div *ngFor="let project of displayedProjects" class="project-card">
           <div class="card-image">
             <img [src]="project.image" [alt]="project.title" />
             <div class="image-overlay">
               <div class="overlay-content">
-                <h4>{{project.title}}</h4>
-                <p>{{project.longDescription}}</p>
+                <h4>{{ project.title }}</h4>
+                <p>{{ project.longDescription }}</p>
+
                 <div class="overlay-buttons">
-                  <button 
-                    *ngIf="project.githubUrl" 
+                  <button
+                    (click)="openProject(project, 'overview')"
+                    class="overlay-btn primary"
+                    type="button">
+                    Details
+                  </button>
+
+                  <button
+                    (click)="openProject(project, 'demo')"
+                    class="overlay-btn"
+                    type="button">
+                    Demo
+                  </button>
+
+                  <button
+                    *ngIf="project.githubUrl"
                     (click)="openGithub(project.githubUrl)"
-                    class="overlay-btn github-btn">
+                    class="overlay-btn github-btn"
+                    type="button">
                     <span class="icon">📁</span>
                     View Code
                   </button>
@@ -89,14 +139,43 @@
               </div>
             </div>
           </div>
+
           <div class="card-content">
             <div class="card-header">
-              <h3>{{project.title}}</h3>
-              <span class="category-badge" [attr.data-category]="project.category">{{project.category}}</span>
+              <h3>{{ project.title }}</h3>
+              <span class="category-badge" [attr.data-category]="project.category">{{ project.category }}</span>
             </div>
-            <p class="description">{{project.description}}</p>
+
+            <p class="description">{{ project.description }}</p>
+
             <div class="tech-stack">
-              <span class="tech-tag" *ngFor="let tech of project.technologies">{{tech}}</span>
+              <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+            </div>
+
+            <div class="card-footer">
+              <div class="action-buttons">
+                <button
+                  (click)="openProject(project, 'overview')"
+                  class="action-btn primary"
+                  type="button">
+                  Details
+                </button>
+
+                <button
+                  (click)="openProject(project, 'demo')"
+                  class="action-btn secondary"
+                  type="button">
+                  Demo
+                </button>
+
+                <button
+                  *ngIf="project.githubUrl"
+                  (click)="openGithub(project.githubUrl)"
+                  class="action-btn secondary"
+                  type="button">
+                  GitHub
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -104,10 +183,155 @@
     </div>
 
     <!-- Empty State -->
-    <div class="empty-state" *ngIf="filteredProjects.length === 0">
+    <div class="empty-state" *ngIf="displayedProjects.length === 0 && featuredProjects.length === 0">
       <div class="empty-icon">📁</div>
       <h3>No projects found</h3>
       <p>No projects match the selected category. Try selecting a different filter.</p>
+    </div>
+
+    <div class="more-github">
+      <p>Want to see more projects?</p>
+      <a
+        class="github-link"
+        href="https://github.com/krispykeenz"
+        target="_blank"
+        rel="noopener">
+        View all repos on GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- Project Details / Demo Modal -->
+  <div class="modal-backdrop" *ngIf="selectedProject" (click)="closeProject()"></div>
+
+  <div class="project-modal" *ngIf="selectedProject" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="header-text">
+        <h2>{{ selectedProject.title }}</h2>
+        <p class="subtitle">{{ selectedProject.description }}</p>
+      </div>
+
+      <button
+        class="modal-close"
+        type="button"
+        (click)="closeProject()"
+        aria-label="Close project details">
+        ✕
+      </button>
+    </div>
+
+    <div class="modal-tabs">
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="selectedTab === 'overview'"
+        (click)="selectedTab = 'overview'">
+        Overview
+      </button>
+
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="selectedTab === 'demo'"
+        (click)="selectedTab = 'demo'">
+        Demo
+      </button>
+
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="selectedTab === 'backend'"
+        (click)="selectedTab = 'backend'">
+        Backend
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <ng-container [ngSwitch]="selectedTab">
+        <div *ngSwitchCase="'overview'" class="tab-panel">
+          <p>{{ selectedProject.longDescription }}</p>
+
+          <h3 *ngIf="selectedProject.highlights?.length">Highlights</h3>
+          <ul *ngIf="selectedProject.highlights?.length" class="bullets">
+            <li *ngFor="let item of selectedProject.highlights">{{ item }}</li>
+          </ul>
+
+          <h3>Tech</h3>
+          <div class="tech-stack">
+            <span class="tech-tag" *ngFor="let tech of selectedProject.technologies">{{ tech }}</span>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'demo'" class="tab-panel">
+          <ng-container *ngIf="safeEmbedUrl; else noEmbed">
+            <div class="demo-frame">
+              <iframe
+                [src]="safeEmbedUrl"
+                title="Project demo"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
+              </iframe>
+            </div>
+
+            <div class="demo-actions" *ngIf="selectedProject.liveDemoUrl">
+              <button
+                class="modal-btn primary"
+                type="button"
+                (click)="openLiveDemo(selectedProject.liveDemoUrl)">
+                Open live demo
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-template #noEmbed>
+            <ng-container *ngIf="selectedProject.demoVideoUrl; else noDemo">
+              <video class="demo-video" controls [src]="selectedProject.demoVideoUrl"></video>
+            </ng-container>
+
+            <ng-template #noDemo>
+              <p class="muted">
+                No live deployment yet. Add a deployed URL later (and optionally an embeddable URL) to show a
+                working demo inside this modal.
+              </p>
+
+              <div *ngIf="selectedProject.runLocally?.length" class="run-locally">
+                <h3>Run locally</h3>
+                <ol class="run-steps">
+                  <li *ngFor="let step of selectedProject.runLocally">{{ step }}</li>
+                </ol>
+              </div>
+            </ng-template>
+          </ng-template>
+        </div>
+
+        <div *ngSwitchCase="'backend'" class="tab-panel">
+          <p class="muted" *ngIf="!selectedProject.backendHighlights?.length">
+            No backend notes added for this project yet.
+          </p>
+
+          <ul *ngIf="selectedProject.backendHighlights?.length" class="bullets">
+            <li *ngFor="let item of selectedProject.backendHighlights">{{ item }}</li>
+          </ul>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        *ngIf="selectedProject.githubUrl"
+        class="modal-btn secondary"
+        type="button"
+        (click)="openGithub(selectedProject.githubUrl)">
+        View Code
+      </button>
+
+      <button
+        *ngIf="selectedProject.liveDemoUrl"
+        class="modal-btn primary"
+        type="button"
+        (click)="openLiveDemo(selectedProject.liveDemoUrl)">
+        Open Demo
+      </button>
     </div>
   </div>
 </section>

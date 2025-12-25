@@ -1,17 +1,10 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, HostListener } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PROJECTS } from '../../data/projects';
+import { Project } from '../../models/project.model';
 
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  longDescription: string;
-  image: string;
-  technologies: string[];
-  githubUrl?: string;
-  category: string;
-  featured: boolean;
-}
+type ProjectModalTab = 'overview' | 'demo' | 'backend';
 
 @Component({
   selector: 'app-projects',
@@ -21,92 +14,66 @@ export interface Project {
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent {
-  projects: Project[] = [
-    {
-      id: 1,
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution with modern UI and secure payment processing',
-      longDescription: 'A comprehensive e-commerce platform built with Angular and Node.js, featuring user authentication, product catalog, shopping cart, order management, and integrated payment processing with Stripe.',
-      image: 'https://raw.githubusercontent.com/krispykeenz/virtual-cv/refs/heads/main/src/assets/images/e-com.jpg',
-      technologies: ['Angular', 'Node.js', 'MongoDB', 'Stripe API', 'JWT', 'Bootstrap'],
-      githubUrl: 'https://github.com/krispykeenz/E-Commerce',
-      category: 'Full Stack',
-      featured: true,
-    },
-    {
-      id: 2,
-      title: 'Weather Analytics Dashboard',
-      description: 'Data visualization dashboard for weather analytics and forecasting',
-      longDescription: 'Interactive dashboard displaying weather data analytics with charts, maps, and forecasting capabilities. Integrates with multiple weather APIs and provides historical data analysis.',
-      image: 'https://raw.githubusercontent.com/krispykeenz/virtual-cv/refs/heads/main/src/assets/images/weather_dashboard.png',
-      technologies: ['Vue.js', 'D3.js', 'Python', 'Flask', 'Chart.js', 'Leaflet'],
-      githubUrl: 'https://github.com/krispykeenz/Weather_Dashboard',  
-      category: 'Data Visualization',
-      featured: false,
-    },
-    {
-      id: 3,
-      title: 'REST API Gateway',
-      description: 'Microservices API gateway with authentication and rate limiting',
-      longDescription: 'A scalable API gateway built with Node.js and Docker, providing authentication, rate limiting, request routing, and monitoring for microservices architecture.',
-      image: 'https://raw.githubusercontent.com/krispykeenz/virtual-cv/refs/heads/main/src/assets/images/restAPI.png',
-      technologies: ['Node.js', 'Docker', 'Redis', 'MongoDB', 'JWT', 'Express.js'],
-      githubUrl: 'https://github.com/krispykeenz/Restful_Api',
-      category: 'Backend',
-      featured: false,
-    },
-    {
-      id: 4,
-      title: 'Mobile Expense Tracker',
-      description: 'Cross-platform mobile app for personal expense tracking',
-      longDescription: 'Mobile application for tracking personal expenses with categories, budgets, and spending analytics. Built with React Native for cross-platform compatibility.',
-      image: 'https://raw.githubusercontent.com/krispykeenz/virtual-cv/refs/heads/main/src/assets/images/expense-tracker.jpg',
-      technologies: ['React Native', 'Firebase', 'Redux', 'Chart.js', 'Expo'],
-      githubUrl: 'https://github.com/krispykeenz/Displaying_Finances',
-      category: 'Mobile',
-      featured: false,
-    },
-    {
-      id: 5,
-      title: 'Carrier Pigeon Post',
-      description: 'Cross-platform messaging experience that sends texts as whimsical pigeon deliveries',
-      longDescription: 'Carrier Pigeon Post is an Expo-powered React Native app that uses Supabase auth, animated map visuals, and React Query to simulate real-time pigeon message flights across the globe.',
-      image: 'https://raw.githubusercontent.com/krispykeenz/carrier-pigeon/main/assets/icon.png',
-      technologies: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'React Query', 'Mapbox'],
-      githubUrl: 'https://github.com/krispykeenz/carrier-pigeon',
-      category: 'Mobile',
-      featured: true,
-    }
-  ];
+  projects: Project[] = PROJECTS;
 
-  categories: string[] = ['All', 'Full Stack', 'Backend', 'Mobile', 'Data Visualization'];
+  categories: string[] = [];
   selectedCategory: string = 'All';
-  filteredProjects: Project[] = [...this.projects];
 
-  ngOnInit(): void {
-    this.filterProjects();
+  selectedProject: Project | null = null;
+  selectedTab: ProjectModalTab = 'overview';
+  safeEmbedUrl: SafeResourceUrl | null = null;
+
+  constructor(private sanitizer: DomSanitizer) {
+    this.categories = ['All', ...Array.from(new Set(this.projects.map(p => p.category)))];
   }
 
-  filterProjects(): void {
-    if (this.selectedCategory === 'All') {
-      this.filteredProjects = [...this.projects];
-    } else {
-      this.filteredProjects = this.projects.filter(project => 
-        project.category === this.selectedCategory
-      );
-    }
+  get featuredProjects(): Project[] {
+    return this.projects.filter(p => p.featured);
+  }
+
+  get displayedProjects(): Project[] {
+    const inCategory =
+      this.selectedCategory === 'All'
+        ? this.projects
+        : this.projects.filter(p => p.category === this.selectedCategory);
+
+    // Avoid duplicating featured cards when "All" is selected.
+    return this.selectedCategory === 'All' ? inCategory.filter(p => !p.featured) : inCategory;
   }
 
   selectCategory(category: string): void {
     this.selectedCategory = category;
-    this.filterProjects();
   }
 
   openGithub(url: string): void {
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener');
   }
 
   openLiveDemo(url: string): void {
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener');
+  }
+
+  openProject(project: Project, tab: ProjectModalTab = 'overview'): void {
+    this.selectedProject = project;
+    this.selectedTab = tab;
+
+    const embedCandidate = project.liveDemoEmbedUrl ?? project.liveDemoUrl;
+    this.safeEmbedUrl = embedCandidate
+      ? this.sanitizer.bypassSecurityTrustResourceUrl(embedCandidate)
+      : null;
+
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeProject(): void {
+    this.selectedProject = null;
+    this.safeEmbedUrl = null;
+    this.selectedTab = 'overview';
+    document.body.style.overflow = '';
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.selectedProject) this.closeProject();
   }
 }

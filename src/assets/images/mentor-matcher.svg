@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="55%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <g fill="rgba(255,255,255,0.92)">
+    <text x="90" y="220" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="76" font-weight="800">MentorMatch SA</text>
+    <text x="90" y="295" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="32" font-weight="500">Swipe-style mentorship discovery</text>
+  </g>
+  <g fill="rgba(255,255,255,0.18)">
+    <rect x="860" y="120" width="220" height="320" rx="28"/>
+    <rect x="920" y="160" width="220" height="320" rx="28"/>
+    <rect x="980" y="200" width="220" height="320" rx="28"/>
+  </g>
+</svg>

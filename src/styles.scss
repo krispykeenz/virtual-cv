@@ -170,3 +170,209 @@ p {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Projects modal (kept global to avoid component style budget errors) */
+.projects-section {
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 1000;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .project-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(1000px, 92vw);
+    max-height: 85vh;
+    z-index: 1001;
+
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 20px;
+    backdrop-filter: blur(16px);
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+      .header-text {
+        min-width: 0;
+
+        h2 {
+          margin: 0;
+          font-size: 1.6rem;
+        }
+
+        .subtitle {
+          margin-top: 0.25rem;
+          margin-bottom: 0;
+          opacity: 0.85;
+        }
+      }
+
+      .modal-close {
+        flex: 0 0 auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
+      }
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      flex-wrap: wrap;
+
+      .tab-btn {
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.14);
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.9);
+          color: #667eea;
+          border-color: white;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 1rem 1.5rem;
+      overflow: auto;
+
+      .tab-panel {
+        .muted {
+          opacity: 0.8;
+        }
+
+        h3 {
+          margin-top: 1.25rem;
+          margin-bottom: 0.5rem;
+          font-size: 1.1rem;
+        }
+
+        .bullets {
+          padding-left: 1.25rem;
+          margin: 0.25rem 0 0;
+
+          li {
+            margin: 0.35rem 0;
+            line-height: 1.5;
+          }
+        }
+
+        .demo-frame {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(0, 0, 0, 0.2);
+
+          iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+          }
+        }
+
+        .demo-video {
+          width: 100%;
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(0, 0, 0, 0.25);
+        }
+
+        .demo-actions {
+          margin-top: 1rem;
+        }
+
+        .run-locally {
+          margin-top: 1rem;
+
+          .run-steps {
+            padding-left: 1.25rem;
+            margin: 0.25rem 0 0;
+
+            li {
+              margin: 0.35rem 0;
+            }
+          }
+        }
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      flex-wrap: wrap;
+
+      .modal-btn {
+        padding: 0.6rem 1.1rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+
+        &.primary {
+          background: linear-gradient(45deg, #ff6b6b, #feca57);
+          color: white;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+          }
+        }
+
+        &.secondary {
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.35);
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.55);
+          }
+        }
+      }
+    }
+  }
+}

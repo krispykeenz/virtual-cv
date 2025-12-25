@@ -196,9 +196,25 @@
           transition: all 0.3s ease;
           backdrop-filter: blur(10px);
 
+          &.primary {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border-color: transparent;
+          }
+
           &:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
+          }
+
+          &.primary:hover {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
           }
 
           .icon {
@@ -360,6 +376,35 @@
       opacity: 0.6;
     }
   }
+
+  .more-github {
+    margin-top: 3rem;
+    text-align: center;
+
+    p {
+      margin-bottom: 0.75rem;
+      opacity: 0.85;
+    }
+
+    .github-link {
+      display: inline-block;
+      padding: 0.75rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: white;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: rgba(255, 255, 255, 0.55);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
 }
 
 // Responsive Design
