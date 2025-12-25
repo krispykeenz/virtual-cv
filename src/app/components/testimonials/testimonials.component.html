@@ -1,0 +1,45 @@
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <h1 class="section-title">Testimonials & References</h1>
+      <p class="section-subtitle">What people say about working with me</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+        <div class="quote-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+          </svg>
+        </div>
+        
+        <div class="testimonial-content">
+          <p class="testimonial-text">"{{ testimonial.testimonial }}"</p>
+          
+          <div class="rating">
+            <span class="star" *ngFor="let star of getStars(testimonial.rating)">{{ star }}</span>
+          </div>
+        </div>
+
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <span *ngIf="!testimonial.image">{{ testimonial.name.charAt(0) }}</span>
+            <img *ngIf="testimonial.image" [src]="testimonial.image" [alt]="testimonial.name" />
+          </div>
+          <div class="author-info">
+            <h3 class="author-name">{{ testimonial.name }}</h3>
+            <p class="author-role">{{ testimonial.role }}</p>
+            <p class="author-company">{{ testimonial.company }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="references-note">
+      <div class="note-card">
+        <h3>📋 Professional References</h3>
+        <p>Additional references and recommendations are available upon request. Please feel free to <a routerLink="/contact" class="contact-link">contact me</a> for more detailed information.</p>
+      </div>
+    </div>
+  </div>
+</section>
