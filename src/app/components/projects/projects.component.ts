@@ -53,13 +53,28 @@ export class ProjectsComponent {
     window.open(url, '_blank', 'noopener');
   }
 
+  private buildEmbedUrl(rawUrl: string): string {
+    // GitHub Pages sets cache-control headers (often 10min). When you redeploy demos,
+    // iframes can keep showing older cached HTML. Add a cache-buster so the modal always
+    // loads the latest version without requiring a hard refresh.
+    const cacheBuster = `warp_embed=1&v=${Date.now()}`;
+
+    const [beforeHash, hash] = rawUrl.split('#', 2);
+    const separator = beforeHash.includes('?') ? '&' : '?';
+    const withQuery = `${beforeHash}${separator}${cacheBuster}`;
+
+    return hash ? `${withQuery}#${hash}` : withQuery;
+  }
+
   openProject(project: Project, tab: ProjectModalTab = 'overview'): void {
     this.selectedProject = project;
     this.selectedTab = tab;
 
     const embedCandidate = project.liveDemoEmbedUrl ?? project.liveDemoUrl;
-    this.safeEmbedUrl = embedCandidate
-      ? this.sanitizer.bypassSecurityTrustResourceUrl(embedCandidate)
+    const embedUrl = embedCandidate ? this.buildEmbedUrl(embedCandidate) : null;
+
+    this.safeEmbedUrl = embedUrl
+      ? this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl)
       : null;
 
     document.body.style.overflow = 'hidden';
