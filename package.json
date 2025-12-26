@@ -7,7 +7,7 @@
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --configuration production && npx angular-cli-ghpages --dir=dist/virtual-cv/browser"
+    "deploy": "ng build --configuration production --base-href /virtual-cv/ && npx angular-cli-ghpages --dir=dist/virtual-cv/browser"
   },
   "private": true,
   "dependencies": {
