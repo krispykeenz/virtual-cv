@@ -1,19 +1,11 @@
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 
 class EmailService {
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT),
-      secure: process.env.SMTP_PORT == '465', // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      },
-      tls: {
-        rejectUnauthorized: true
-      }
-    });
+    // Initialize SendGrid with API key
+    if (process.env.SENDGRID_API_KEY) {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    }
   }
 
   async sendContactEmail(contactData) {
@@ -141,33 +133,54 @@ This is an automated response. Please do not reply to this email.
     };
 
     try {
-      // Send both emails
+      // Convert to SendGrid format
+      const mainEmailSG = {
+        to: process.env.TO_EMAIL,
+        from: process.env.FROM_EMAIL,
+        subject: `New Contact Form Submission: ${subject}`,
+        html: mailOptions.html,
+        text: mailOptions.text
+      };
+
+      const replyEmailSG = {
+        to: email,
+        from: process.env.FROM_EMAIL,
+        subject: 'Thank you for contacting me!',
+        html: replyOptions.html,
+        text: replyOptions.text
+      };
+
+      // Send both emails using SendGrid
       const [mainEmail, replyEmail] = await Promise.all([
-        this.transporter.sendMail(mailOptions),
-        this.transporter.sendMail(replyOptions)
+        sgMail.send(mainEmailSG),
+        sgMail.send(replyEmailSG)
       ]);
 
-      console.log('📧 Main email sent:', mainEmail.messageId);
-      console.log('📧 Auto-reply sent:', replyEmail.messageId);
+      console.log('📧 Main email sent via SendGrid');
+      console.log('📧 Auto-reply sent via SendGrid');
 
       return {
         success: true,
-        messageId: mainEmail.messageId,
-        replyId: replyEmail.messageId
+        messageId: mainEmail[0].headers['x-message-id'],
+        replyId: replyEmail[0].headers['x-message-id']
       };
     } catch (error) {
-      console.error('❌ Email sending failed:', error);
+      console.error('❌ Email sending failed:', error.response?.body || error);
       throw new Error('Failed to send email');
     }
   }
 
   async testConnection() {
     try {
-      await this.transporter.verify();
-      console.log('✅ Email service connection verified');
+      // SendGrid doesn't need connection verification
+      // Just check if API key is set
+      if (!process.env.SENDGRID_API_KEY) {
+        throw new Error('SENDGRID_API_KEY not configured');
+      }
+      console.log('✅ SendGrid API key is configured');
       return true;
     } catch (error) {
-      console.error('❌ Email service connection failed:', error);
+      console.error('❌ SendGrid configuration failed:', error);
       return false;
     }
   }
