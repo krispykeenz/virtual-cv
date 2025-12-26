@@ -136,7 +136,10 @@ This is an automated response. Please do not reply to this email.
       // Convert to SendGrid format
       const mainEmailSG = {
         to: process.env.TO_EMAIL,
-        from: process.env.FROM_EMAIL,
+        from: {
+          email: process.env.FROM_EMAIL,
+          name: process.env.FROM_NAME || 'Virtual CV Contact Form'
+        },
         subject: `New Contact Form Submission: ${subject}`,
         html: mailOptions.html,
         text: mailOptions.text
@@ -144,7 +147,10 @@ This is an automated response. Please do not reply to this email.
 
       const replyEmailSG = {
         to: email,
-        from: process.env.FROM_EMAIL,
+        from: {
+          email: process.env.FROM_EMAIL,
+          name: process.env.FROM_NAME || 'Virtual CV Contact Form'
+        },
         subject: 'Thank you for contacting me!',
         html: replyOptions.html,
         text: replyOptions.text
