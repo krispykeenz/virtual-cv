@@ -275,10 +275,11 @@
     .about-content {
       grid-template-columns: 1fr;
       gap: 3rem;
-      text-align: center;
     }
 
     .profile-section {
+      text-align: center;
+      
       .profile-image {
         width: 150px;
         height: 150px;
@@ -290,6 +291,18 @@
     }
 
     .about-text {
+      h3 {
+        text-align: center;
+      }
+      
+      .intro {
+        text-align: left;
+      }
+      
+      .highlights {
+        text-align: left;
+      }
+      
       .stats {
         grid-template-columns: 1fr;
         gap: 1rem;

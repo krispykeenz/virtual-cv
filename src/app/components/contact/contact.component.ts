@@ -117,7 +117,7 @@ export class ContactComponent {
         if (response?.success) {
           console.log('✅ Message sent successfully:', response.messageId);
           this.isSubmitted = true;
-          this.resetForm();
+          this.resetForm(form);
           
           // Hide success message after 8 seconds
           setTimeout(() => {
@@ -141,13 +141,18 @@ export class ContactComponent {
 
 
 
-  private resetForm(): void { 
+  private resetForm(form?: NgForm): void { 
     this.contactForm = {
       name: '',
       email: '',
       subject: '',
       message: ''
     };
+    
+    // Reset form validation state
+    if (form) {
+      form.resetForm();
+    }
   }
 
   openSocialLink(url: string): void {

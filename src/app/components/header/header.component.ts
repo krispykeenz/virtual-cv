@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -13,5 +13,21 @@ export class HeaderComponent {
 
   toggleMobileMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.isMenuOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const header = target.closest('.header');
+    const isClickInsideMenu = target.closest('.navbar') || target.closest('.mobile-menu-toggle');
+    
+    // Close menu if clicking outside and menu is open
+    if (this.isMenuOpen && header && !isClickInsideMenu) {
+      this.closeMobileMenu();
+    }
   }
 }
