@@ -21,12 +21,14 @@ export class HeaderComponent {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const header = target.closest('.header');
-    const isClickInsideMenu = target.closest('.navbar') || target.closest('.mobile-menu-toggle');
+    if (!this.isMenuOpen) return;
     
-    // Close menu if clicking outside and menu is open
-    if (this.isMenuOpen && header && !isClickInsideMenu) {
+    const target = event.target as HTMLElement;
+    const isClickInsideMenu = target.closest('.navbar');
+    const isClickOnToggle = target.closest('.mobile-menu-toggle');
+    
+    // Close menu if clicking outside the menu and toggle button
+    if (!isClickInsideMenu && !isClickOnToggle) {
       this.closeMobileMenu();
     }
   }
