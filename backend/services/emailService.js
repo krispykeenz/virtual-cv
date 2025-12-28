@@ -1,20 +1,64 @@
-const sgMail = require('@sendgrid/mail');
+let sgMail;
+const nodemailer = require('nodemailer');
 
 class EmailService {
   constructor() {
-    // Initialize SendGrid with API key
+    // Initialize SendGrid with API key (optional)
     if (process.env.SENDGRID_API_KEY) {
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      try {
+        sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      } catch (error) {
+        throw new Error(
+          'SENDGRID_API_KEY is set but @sendgrid/mail is not installed. Run `npm install` in backend/ or remove SENDGRID_API_KEY to use SMTP instead.'
+        );
+      }
     }
+  }
+
+  getProvider() {
+    return process.env.SENDGRID_API_KEY ? 'sendgrid' : 'smtp';
+  }
+
+  createSmtpTransporter() {
+    const host = process.env.SMTP_HOST;
+    const port = Number(process.env.SMTP_PORT || 587);
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+
+    if (!host || !port || !user || !pass) {
+      throw new Error(
+        'SMTP is not configured. Set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS (or set SENDGRID_API_KEY to use SendGrid).'
+      );
+    }
+
+    return nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465,
+      auth: {
+        user,
+        pass
+      }
+    });
   }
 
   async sendContactEmail(contactData) {
     const { name, email, subject, message } = contactData;
 
+    const fromName = process.env.FROM_NAME || 'Virtual CV Contact Form';
+    const fromEmail = process.env.FROM_EMAIL;
+    const toEmail = process.env.TO_EMAIL;
+
+    if (!fromEmail || !toEmail) {
+      throw new Error('Missing FROM_EMAIL or TO_EMAIL configuration');
+    }
+
     // Email to you (the recipient)
     const mailOptions = {
-      from: `"${process.env.FROM_NAME}" <${process.env.FROM_EMAIL}>`,
-      to: process.env.TO_EMAIL,
+      from: `"${fromName}" <${fromEmail}>`,
+      to: toEmail,
+      replyTo: email,
       subject: `New Contact Form Submission: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
@@ -69,7 +113,7 @@ Submitted on: ${new Date().toLocaleString()}
 
     // Auto-reply email to the sender
     const replyOptions = {
-      from: `"${process.env.FROM_NAME}" <${process.env.FROM_EMAIL}>`,
+      from: `"${fromName}" <${fromEmail}>`,
       to: email,
       subject: 'Thank you for contacting me!',
       html: `
@@ -86,7 +130,7 @@ Submitted on: ${new Date().toLocaleString()}
             
             <p style="color: #555; line-height: 1.6;">
               I'll review your message and get back to you within 24 hours. If your inquiry is urgent, 
-              feel free to reach out to me directly at kjburriss@gmail.com.
+              feel free to reach out to me directly at ${toEmail}.
             </p>
             
             <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #007bff; border-radius: 5px; margin: 20px 0;">
@@ -117,7 +161,7 @@ Hi ${name},
 
 Thank you for contacting me through my portfolio website. I've received your message about "${subject}" and I really appreciate you taking the time to reach out.
 
-I'll review your message and get back to you within 24 hours. If your inquiry is urgent, feel free to reach out to me directly at kjburriss@gmail.com.
+I'll review your message and get back to you within 24 hours. If your inquiry is urgent, feel free to reach out to me directly at ${toEmail}.
 
 Your Message Summary:
 "${message.substring(0, 150)}${message.length > 150 ? '...' : ''}"
@@ -133,60 +177,85 @@ This is an automated response. Please do not reply to this email.
     };
 
     try {
-      // Convert to SendGrid format
-      const mainEmailSG = {
-        to: process.env.TO_EMAIL,
-        from: {
-          email: process.env.FROM_EMAIL,
-          name: process.env.FROM_NAME || 'Virtual CV Contact Form'
-        },
-        subject: `New Contact Form Submission: ${subject}`,
-        html: mailOptions.html,
-        text: mailOptions.text
-      };
+      if (this.getProvider() === 'sendgrid') {
+        const mainEmailSG = {
+          to: toEmail,
+          from: {
+            email: fromEmail,
+            name: fromName
+          },
+          replyTo: {
+            email
+          },
+          subject: mailOptions.subject,
+          html: mailOptions.html,
+          text: mailOptions.text
+        };
 
-      const replyEmailSG = {
-        to: email,
-        from: {
-          email: process.env.FROM_EMAIL,
-          name: process.env.FROM_NAME || 'Virtual CV Contact Form'
-        },
-        subject: 'Thank you for contacting me!',
-        html: replyOptions.html,
-        text: replyOptions.text
-      };
+        const replyEmailSG = {
+          to: email,
+          from: {
+            email: fromEmail,
+            name: fromName
+          },
+          subject: replyOptions.subject,
+          html: replyOptions.html,
+          text: replyOptions.text
+        };
 
-      // Send both emails using SendGrid
-      const [mainEmail, replyEmail] = await Promise.all([
-        sgMail.send(mainEmailSG),
-        sgMail.send(replyEmailSG)
+        const [mainEmail, replyEmail] = await Promise.all([
+          sgMail.send(mainEmailSG),
+          sgMail.send(replyEmailSG)
+        ]);
+
+        console.log('📧 Main email sent via SendGrid');
+        console.log('📧 Auto-reply sent via SendGrid');
+
+        return {
+          success: true,
+          messageId: mainEmail?.[0]?.headers?.['x-message-id'],
+          replyId: replyEmail?.[0]?.headers?.['x-message-id']
+        };
+      }
+
+      const transporter = this.createSmtpTransporter();
+
+      const [mainInfo, replyInfo] = await Promise.all([
+        transporter.sendMail(mailOptions),
+        transporter.sendMail(replyOptions)
       ]);
 
-      console.log('📧 Main email sent via SendGrid');
-      console.log('📧 Auto-reply sent via SendGrid');
+      console.log('📧 Main email sent via SMTP');
+      console.log('📧 Auto-reply sent via SMTP');
 
       return {
         success: true,
-        messageId: mainEmail[0].headers['x-message-id'],
-        replyId: replyEmail[0].headers['x-message-id']
+        messageId: mainInfo.messageId,
+        replyId: replyInfo.messageId
       };
     } catch (error) {
-      console.error('❌ Email sending failed:', error.response?.body || error);
+      const sendgridDetails = error?.response?.body;
+      console.error('❌ Email sending failed:', sendgridDetails || error);
       throw new Error('Failed to send email');
     }
   }
 
   async testConnection() {
     try {
-      // SendGrid doesn't need connection verification
-      // Just check if API key is set
-      if (!process.env.SENDGRID_API_KEY) {
-        throw new Error('SENDGRID_API_KEY not configured');
+      if (this.getProvider() === 'sendgrid') {
+        if (!process.env.SENDGRID_API_KEY) {
+          throw new Error('SENDGRID_API_KEY not configured');
+        }
+        console.log('✅ SendGrid API key is configured');
+        return true;
       }
-      console.log('✅ SendGrid API key is configured');
+
+      const transporter = this.createSmtpTransporter();
+      await transporter.verify();
+      console.log('✅ SMTP connection verified');
       return true;
     } catch (error) {
-      console.error('❌ SendGrid configuration failed:', error);
+      console.error('❌ Email service configuration failed:', error);
       return false;
     }
   }
