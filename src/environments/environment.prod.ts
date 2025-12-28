@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://virtual-cv-00w0.onrender.com/api'
+  apiUrl: 'https://sacred-shena-keenanburriss-5f2fafd6.koyeb.app/api'
 };
