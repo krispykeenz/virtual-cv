@@ -23,7 +23,7 @@ export class AboutComponent {
       'Performance optimization specialist'
     ],
     stats: {
-      experience: '2+',
+      experience: '3+',
       projects: '10+',
       technologies: '10+'
     }
